@@ -1,16 +1,36 @@
 #!/usr/bin/python
 import datetime
 import supppl
+import yaml
 class StundenPlan(object):
     def __init__(self, cls):
         self.cls=cls
+        yamllist = []
+        file = open('classes.txt')        
+        for i in yaml.load_all(file):
+            yamllist.append(i)
+        self.lessondict = yamllist[1]
+        self.lessonteachers = yamllist[0]
+
+    def getDicts(self):
+        return (self.lessondict, self.lessonteachers)
 
     def getLessons(self):
-        self.lessons = [['PUP','MA','ETH','BIUK', 'INF', 'INF'], 
-            ['','GSPB','SPA', 'CH3', 'CH3', 'E', '', '', '', 'BUSP', 'BUSP'], 
-            ['SPA', 'D', 'MA', 'PH', 'GWK'],
-            ['ETH', 'D', 'E', 'MA', 'PUP', 'BIUK', '', 'MU', 'MU', 'INF+', 'INF+'],
-            ['GWK', 'D', 'SPA', 'E', 'GSPB', 'PH']]
+        self.lessons = [['PUP','M2','ETH','BIUK', 'INF', 'INF'], 
+            ['','GSPB','SPA', 'CH3', 'CH3', 'E1', '', '', '', 'BSPK', 'BSPK'], 
+            ['SPA', 'D', 'M2', 'PH3', 'GWK'],
+            ['ETH', 'D', 'E1', 'M2', 'PUP', 'BIUK', '', 'MU4A', 'MU4A', 'INFW', 'INFW'],
+            ['GWK', 'D', 'SPA', 'E1', 'GSPB', 'PH3']]
+        self.lessonnames = []
+        #for i in self.lessons:
+         #   templist = []
+          #  for x in i:
+            #    if x in self.lessondict.keys():
+             #       templist.append(self.lessondict[x])
+              #  else:
+               #     templist.append(x)
+            #self.lessonnames.append(templist)
+
         return self.lessons
 
     def getCurrentSups(self):
@@ -28,8 +48,16 @@ class StundenPlan(object):
                 for x in datelist:
                     if i.date() == x.date():
                         for z in xrange(len(plan[i])):
-                            if not (plan[i][z][4] and plan[i][z][4] not in self.lessons[x.weekday()]):
-                                supplist.append([x.weekday(), int(plan[i][z][2]) - 1, \
+                            if plan[i][z][4]:
+                                if plan[i][z][4] in self.lessons[x.weekday()]:
+                                    supplist.append([x.weekday(), plan[i][z][2] - 1,
+                                            plan[i][z][3], plan[i][z][5], plan[i][z][8]])
+                            elif plan[i][z][6]:
+                                if plan[i][z][6] == self.lessonteachers[self.lessons[x.weekday()][plan[i][z][2]]]:
+                                    supplist.append([x.weekday(), plan[i][z][2] - 1, 
+                                            plan[i][z][3], plan[i][z][5], plan[i][z][8]])
+                            else:
+                                supplist.append([x.weekday(), plan[i][z][2] - 1, 
                                         plan[i][z][3], plan[i][z][5], plan[i][z][8]])
             return supplist
 
