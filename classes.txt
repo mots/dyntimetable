@@ -1,0 +1,32 @@
+---
+PUP: KOVC
+M2: FREE
+ETH: UNGL
+INF: FREE
+GSPB: VARG
+SPA: EISC
+CH3: DIEE
+E1: DRAY
+D: UNGL
+PH3: WIPA
+GWK: BRUM
+BIUK: KIRD
+MU4A: GEKA
+INFW: PODH
+BSPK: KERF
+---
+PUP: Philosophie
+M2: Mathematik
+ETH: Ethik
+INF: Informatik
+GSPB: Geschichte
+SPA: Spanisch
+CH3: Chemie
+E1: Englisch
+D: Deutsch
+PH3: Physik
+GWK: Geographie
+BIUK: Biologie
+MU4A: Musik
+INFW: Informatik+
+BSPK: Turnen
