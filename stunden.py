@@ -9,6 +9,7 @@ class StundenPlan(object):
         file = open('classes.txt')        
         for i in yaml.load_all(file):
             yamllist.append(i)
+        file.close()
         self.lessondict = yamllist[1]
         self.lessonteachers = yamllist[0]
 
@@ -16,22 +17,23 @@ class StundenPlan(object):
         return (self.lessondict, self.lessonteachers)
 
     def getLessons(self):
-        self.lessons = [['PUP','M2','ETH','BIUK', 'INF', 'INF'], 
-            ['','GSPB','SPA', 'CH3', 'CH3', 'E1', '', '', '', 'BSPK', 'BSPK'], 
-            ['SPA', 'D', 'M2', 'PH3', 'GWK'],
-            ['ETH', 'D', 'E1', 'M2', 'PUP', 'BIUK', '', 'MU4A', 'MU4A', 'INFW', 'INFW'],
-            ['GWK', 'D', 'SPA', 'E1', 'GSPB', 'PH3']]
-        self.lessonnames = []
-        #for i in self.lessons:
-         #   templist = []
-          #  for x in i:
-            #    if x in self.lessondict.keys():
-             #       templist.append(self.lessondict[x])
-              #  else:
-               #     templist.append(x)
-            #self.lessonnames.append(templist)
-
-        return self.lessons
+        file = open('timetable.txt')
+        yamlstuff = yaml.load(file)
+        self.lessons = []
+        self.rooms = []
+        for day in yamlstuff:
+            templessons = []
+            temprooms = []
+            for lesson in day:
+                if lesson:
+                    templessons.append(lesson[0])
+                    temprooms.append(lesson[1])
+                else:
+                    templessons.append('')
+                    temprooms.append('')
+            self.lessons.append(templessons)
+            self.rooms.append(temprooms)
+        return self.lessons, self.rooms
 
     def getCurrentSups(self):
         sp = supppl.Supplierplan(101016, self.cls, 'schueler', 'dsdns')

@@ -16,7 +16,7 @@ class MyWindow(QWidget):
         
         stundenpl = stunden.StundenPlan('8bi')
         lessondict, lessonteachers = stundenpl.getDicts()
-        lessons = stundenpl.getLessons()
+        lessons, rooms= stundenpl.getLessons()
         lessonnames = []
         for i in lessons:
             templist = []
@@ -42,7 +42,7 @@ class MyWindow(QWidget):
             supplpos.append(i[:2])
         tablemodel.setentfallpos(entfpos)
         tablemodel.setsupplpos(supplpos)
-        tableview = MyTableView(self, suppllist, entflist, supplpos, entfpos, lessonteachers, lessons)
+        tableview = MyTableView(self, suppllist, entflist, supplpos, entfpos, lessonteachers, lessons, rooms)
         tableview.setModel(tablemodel) 
  
         layout = QVBoxLayout(self) 
@@ -50,22 +50,21 @@ class MyWindow(QWidget):
         self.setLayout(layout)
         self.setWindowIcon(QIcon('dyntimetable.png'))
         self.setWindowTitle('Dynamic TimeTable')
-       # print tableview.horizontalHeader().size().width()
         self.resize(640, 400)
         tableview.horizontalHeader().setResizeMode(QHeaderView.Stretch)
         tableview.verticalHeader().setResizeMode(QHeaderView.Stretch)
-       # tableview.horizontalHeader().setHeaderData(0, Qt.Horizontal, QVariant('Dongs'))
 
 
 class MyTableView(QTableView):
     def __init__(self, parent, suppllist, entflist,
-            supplpos, entfpos, lessonteachers, lessons):
+            supplpos, entfpos, lessonteachers, lessons, rooms):
         self.suppllist = suppllist
         self.entflist = entflist
         self.supplpos = supplpos
         self.entfpos = entfpos
         self.lessonteachers = lessonteachers
         self.lessons = lessons
+        self.rooms = rooms
         QTableView.__init__(self, parent)
 
     def mouseDoubleClickEvent(self, ev):
@@ -82,10 +81,14 @@ class MyTableView(QTableView):
                         QMessageBox.Ok)
         elif [cell.column(), cell.row()] in self.entfpos:
             QMessageBox.information(self, 'Details', u'Lehrer(in) $Lehrername ist abwesend, die Stunde entfällt...')
+        elif cell.data().toString() != '':
+            QMessageBox.information(self, 'Details',
+                    '<b> Lehrer: </b>' +
+                    self.lessonteachers[self.lessons[cell.column()][cell.row()]] + '<br />'
+                    '<b> Klassenraum: </b>' + self.rooms[cell.column()][cell.row()],
+                    QMessageBox.Ok)
+            
 
-
-#            QMessageBox.information(self.parent, 'Details', 
-        #        QMessageBox.information(self, 'dongs', str(cell.column())+str(cell.row()), QMessageBox.Ok)
 
 class MyTableModel(QAbstractTableModel): 
     def __init__(self, datain, parent=None, *args):
