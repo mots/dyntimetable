@@ -1,0 +1,43 @@
+- - [PUP, 8B]
+  - [M2, EDV3]
+  - [ETH, 3A]
+  - [BIUK, 8B]
+  - [INF, EDV3]
+  - [INF, EDV3]
+- - null
+  - [GSPB, 8B]
+  - [SPA, kA]
+  - [CH3, CHS]
+  - [CH3, CHS]
+  - [E1, 8B]
+  - null
+  - null
+  - null
+  - [BSPK, TS2]
+  - [BSPK, TS2]
+- - [SPA, kA]
+  - [D, 8B]
+  - [M2, EDV3]
+  - [PH3, PHS2]
+  - [GWK, 8B]
+  - null
+  - null
+  - null
+  - null
+  - [MW, 7B]
+  - [MW, 7B]
+- - [ETH, 4G]
+  - [D, 8B]
+  - [M2, EDV3]
+  - [PUP, 8B]
+  - [BIUK, 8B]
+  - null
+  - [MU4A, 8B]
+  - [MU4A, 8B]
+  - [INFW, EDV3]
+  - [INFW, EDV3]
+- - [GWK, 8B]
+  - [D, 8B]
+  - [SPA, kA]
+  - [GSPB, 8B]
+  - [PH3, PHS2]
