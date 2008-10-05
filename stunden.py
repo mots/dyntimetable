@@ -50,21 +50,22 @@ class StundenPlan(object):
                 for x in datelist:
                     if i.date() == x.date():
                         for z in xrange(len(plan[i])):
-                            if plan[i][z][4]:
-                                if plan[i][z][4] in self.lessons[x.weekday()]:
-                                    supplist.append([x.weekday(), plan[i][z][2] - 1,
-                                            plan[i][z][3], plan[i][z][5], plan[i][z][8]])
+                            suppl = plan[i][z]
+                            if suppl[4]:
+                                if suppl[4] in self.lessons[x.weekday()]:
+                                    supplist.append([x.weekday(), suppl[2] - 1,
+                                            suppl[3], suppl[5], suppl[8]])
                             elif plan[i][z][6]:
                                 try:
-                                    teacher = self.lessonteachers[self.lessons[x.weekday()][plan[i][z][2]]]
+                                    teacher = self.lessonteachers[self.lessons[x.weekday()][suppl[2]-1]]
                                 except:
                                     teacher = ''
-                                if plan[i][z][6] == teacher: 
-                                    supplist.append([x.weekday(), plan[i][z][2] - 1, 
-                                            plan[i][z][3], plan[i][z][5], plan[i][z][8]])
+                                if suppl[6] == teacher: 
+                                    supplist.append([x.weekday(), suppl[2] - 1, 
+                                            suppl[3], suppl[5], suppl[8]])
                             else:
-                                supplist.append([x.weekday(), plan[i][z][2] - 1, 
-                                        plan[i][z][3], plan[i][z][5], plan[i][z][8]])
+                                supplist.append([x.weekday(), suppl[2] - 1, 
+                                        suppl[3], suppl[5], suppl[8]])
             return supplist
 
     def _datetoweekday(self):
