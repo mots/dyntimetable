@@ -30,10 +30,15 @@ class MyWindow(QWidget):
         tablemodel = MyTableModel(lessonnames, self)
         suppllist = stundenpl.getCurrentSups()
         entflist = []
+        print suppllist
+        supplistnew = [] 
         for i in suppllist:
+            print i
             if i[4] == u'entf\xe4llt':
-                suppllist.remove(i)
                 entflist.append(i)
+            else:
+                supplistnew.append(i)
+        suppllist = supplistnew
         entfpos = []
         for i in entflist:
             entfpos.append(i[:2])
@@ -42,7 +47,8 @@ class MyWindow(QWidget):
             supplpos.append(i[:2])
         tablemodel.setentfallpos(entfpos)
         tablemodel.setsupplpos(supplpos)
-        tableview = MyTableView(self, suppllist, entflist, supplpos, entfpos, lessonteachers, lessons, rooms)
+        tableview = MyTableView(self, suppllist, entflist, supplpos,
+                entfpos, lessonteachers, lessons, rooms)
         tableview.setModel(tablemodel) 
  
         layout = QVBoxLayout(self) 
@@ -80,7 +86,8 @@ class MyTableView(QTableView):
                         '<b> Klassenraum: </b>' + suppl[3],
                         QMessageBox.Ok)
         elif [cell.column(), cell.row()] in self.entfpos:
-            QMessageBox.information(self, 'Details', u'Lehrer(in) $Lehrername ist abwesend, die Stunde entfällt...')
+            QMessageBox.information(self, 'Details', 
+                    u'Lehrer(in) $Lehrername ist abwesend, die Stunde entfällt...')
         elif cell.data().toString() != '':
             QMessageBox.information(self, 'Details',
                     '<b> Lehrer: </b>' +
