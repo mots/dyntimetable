@@ -55,7 +55,11 @@ class StundenPlan(object):
                                     supplist.append([x.weekday(), plan[i][z][2] - 1,
                                             plan[i][z][3], plan[i][z][5], plan[i][z][8]])
                             elif plan[i][z][6]:
-                                if plan[i][z][6] == self.lessonteachers[self.lessons[x.weekday()][plan[i][z][2]]]:
+                                try:
+                                    teacher = self.lessonteachers[self.lessons[x.weekday()][plan[i][z][2]]]
+                                except:
+                                    teacher = ''
+                                if plan[i][z][6] == teacher: 
                                     supplist.append([x.weekday(), plan[i][z][2] - 1, 
                                             plan[i][z][3], plan[i][z][5], plan[i][z][8]])
                             else:
